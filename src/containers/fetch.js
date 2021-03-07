@@ -11,15 +11,18 @@ import * as homeActions from "../redux/reduces/home";
 )
 class Fetch extends Component {
   state = {};
-  componentWillUnmount() {}
 
   fetchingData = () => {
     const { setTestData } = this.props;
     get("/weather/baidu", { city: "上海", callback: "jsonp_3" }, "/api").then(
       (res) => {
-        debugger;
         console.log(res, "res", this.props.home, this.props);
-        setTestData([{ a: "a" }, { b: "b" }]);
+        setTestData([
+          { title: "a" },
+          { title: "b" },
+          { title: "c" },
+          { title: "d" },
+        ]);
       }
     );
   };
@@ -28,10 +31,15 @@ class Fetch extends Component {
     return (
       <div style={{ listStyle: "none" }}>
         <div
-          style={{ color: "white", cursor: "pointer" }}
+          style={{ color: "white", cursor: "pointer", padding: "30px" }}
           onClick={() => this.fetchingData()}
         >
-          fetching data
+          click this text to fetching data
+        </div>
+        <div style={{ padding: "30px", color: "white", fontSize: "20px" }}>
+          {this.props.home.list.map((_, index) => (
+            <div key={index}>{_.title}</div>
+          ))}
         </div>
       </div>
     );
